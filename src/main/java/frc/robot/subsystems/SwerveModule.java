@@ -18,6 +18,10 @@ public class SwerveModule extends SubsystemBase {
   double kI = 0;
   double kD = 0;
 
+  //Variable PID
+  private double previousError = 0;
+  private double integral = 0;
+
   /** Creates a new SwerveModule. */
   public SwerveModule(CANSparkMax motorRotation, CANSparkMax motorTranslation) {
     this.motorRotation = motorRotation;
@@ -35,6 +39,24 @@ public class SwerveModule extends SubsystemBase {
     //Calcul du sens de rotation le plus court
     double rotationDirection = Math.signum(angleDifference);
     //Si le sens de rotation le plus court est inversé, inverse le moteur de traction
+    if(Math.abs(angleDifference)> Math.PI/2){
+      speed *= -1;
+    }
+    //calcul de l'erreur
+    double error = angleDifference;
+    //calcul de la partie proportionnelle
+    double proportional = kP * error;
+    //calcul de la partie intégrale
+    integral += error;
+    double intergralTerm = kI * integral;
+    //calcul de la partie dérivé
+    double derivative = kD * (error - previousError);
+    previousError = error;
+    //somme des PID
+    double PIDoutput = proportional + intergralTerm + derivative;
+
+    motorRotation.set(PIDoutput);
+    motorTranslation.set(speed);
 
   }
   @Override
