@@ -28,6 +28,7 @@ public class SwerveModule extends SubsystemBase {
     this.motorTranslation = motorTranslation;
   }
   public void setModuleSpeed(double speed, double targetAngle){
+    double tspeed = speed;
     //Calcul de la différence angulaire
     double angleDifference = targetAngle - currentAngle;
     if(angleDifference > Math.PI){
@@ -35,15 +36,14 @@ public class SwerveModule extends SubsystemBase {
     }else if(angleDifference < Math.PI){
       angleDifference += 2*Math.PI;
     }
-
-    //Calcul du sens de rotation le plus court
-    double rotationDirection = Math.signum(angleDifference);
-    //Si le sens de rotation le plus court est inversé, inverse le moteur de traction
+    double angleForMotor = angleDifference;
+    //Si le sens de rotation le plus court est inversé, inverse le moteur de traction et le moteur de rotation
     if(Math.abs(angleDifference)> Math.PI/2){
-      speed *= -1;
+      angleForMotor = 2*Math.PI - angleDifference;
+      tspeed *= -1;
     }
     //calcul de l'erreur
-    double error = angleDifference;
+    double error = angleForMotor;
     //calcul de la partie proportionnelle
     double proportional = kP * error;
     //calcul de la partie intégrale
@@ -56,7 +56,7 @@ public class SwerveModule extends SubsystemBase {
     double PIDoutput = proportional + intergralTerm + derivative;
 
     motorRotation.set(PIDoutput);
-    motorTranslation.set(speed);
+    motorTranslation.set(tspeed);
 
   }
   @Override
