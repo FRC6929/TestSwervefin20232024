@@ -4,13 +4,14 @@
 
 package frc.robot.subsystems;
 
+import com.ctre.phoenix6.hardware.CANcoder;
 import com.revrobotics.CANSparkMax;
-
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
 public class SwerveModule extends SubsystemBase {
   private final CANSparkMax motorRotation;
   private final CANSparkMax motorTranslation;
+  private CANcoder canCoder;
   private double currentAngle;
 
   //constante de PID
@@ -23,9 +24,10 @@ public class SwerveModule extends SubsystemBase {
   private double integral = 0;
 
   /** Creates a new SwerveModule. */
-  public SwerveModule(CANSparkMax motorRotation, CANSparkMax motorTranslation) {
+  public SwerveModule(CANSparkMax motorRotation, CANSparkMax motorTranslation, CANcoder canCoder) {
     this.motorRotation = motorRotation;
     this.motorTranslation = motorTranslation;
+    this.canCoder = canCoder;
   }
   public void setModuleSpeed(double speed, double targetAngle){
     double tspeed = speed;
@@ -33,13 +35,18 @@ public class SwerveModule extends SubsystemBase {
     double angleDifference = targetAngle - currentAngle;
     if(angleDifference > Math.PI){
       angleDifference -= 2*Math.PI;
-    }else if(angleDifference < Math.PI){
+    }else if(angleDifference < -Math.PI){
       angleDifference += 2*Math.PI;
     }
     double angleForMotor = angleDifference;
     //Si le sens de rotation le plus court est inversé, inverse le moteur de traction et le moteur de rotation
     if(Math.abs(angleDifference)> Math.PI/2){
       angleForMotor = 2*Math.PI - angleDifference;
+      if(angleForMotor > Math.PI){
+        angleForMotor -= 2*Math.PI;
+      }else if(angleForMotor < -Math.PI){
+        angleForMotor += 2*Math.PI;
+      }
       tspeed *= -1;
     }
     //calcul de l'erreur
