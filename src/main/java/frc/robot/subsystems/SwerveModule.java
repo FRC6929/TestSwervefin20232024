@@ -13,6 +13,7 @@ public class SwerveModule extends SubsystemBase {
   private final CANSparkMax motorTranslation;
   private CANcoder canCoder;
   private double currentAngle;
+  public int moduleNumber;
 
   //constante de PID
   double kP = 0;
@@ -24,10 +25,10 @@ public class SwerveModule extends SubsystemBase {
   private double integral = 0;
 
   /** Creates a new SwerveModule. */
-  public SwerveModule(CANSparkMax motorRotation, CANSparkMax motorTranslation, CANcoder canCoder) {
-    this.motorRotation = motorRotation;
-    this.motorTranslation = motorTranslation;
-    this.canCoder = canCoder;
+  public SwerveModule(int moduleNumber, SwerveModuleConstants moduleConstants) {
+    this.moduleNumber = moduleNumber;
+    
+    canCoder = new CANcoder(moduleConstants.cancoderID)
   }
   public void setModuleSpeed(double speed, double targetAngle){
     double tspeed = speed;
