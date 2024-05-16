@@ -6,21 +6,19 @@ package frc.robot.commands;
 
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj2.command.Command;
+import frc.robot.subsystems.Swerve;
 import frc.robot.subsystems.SwerveModule;
 
 public class SwerveCommand extends Command {
-  private final SwerveModule module1;
-  private final SwerveModule module2;
-  private final SwerveModule module3;
-  private final SwerveModule module4;
+  private final Swerve swerve;
+  private final Joystick m_joystick;
+
   /** Creates a new SwerveCommand. */
-  public SwerveCommand(SwerveModule mod1, SwerveModule mod2, SwerveModule mod3, SwerveModule mod4, Joystick joystick) {
-    module1 = mod1;
-    module2 = mod2;
-    module3 = mod3;
-    module4 = mod4;
+  public SwerveCommand(Swerve swerve, Joystick joystick) {
+    this.swerve = swerve;
+    m_joystick = joystick;
     // Use addRequirements() here to declare subsystem dependencies.
-    addRequirements(mod1,mod2,mod3,mod4);
+    addRequirements(swerve);
   }
 
   // Called when the command is initially scheduled.
@@ -29,7 +27,12 @@ public class SwerveCommand extends Command {
 
   // Called every time the scheduler runs while the command is scheduled.
   @Override
-  public void execute() {}
+  public void execute() {
+    double angle = Math.atan2(m_joystick.getY(),m_joystick.getX());
+    double magnitude = m_joystick.getMagnitude();
+
+    swerve.drive(angle, magnitude);
+  }
 
   // Called once the command ends or is interrupted.
   @Override

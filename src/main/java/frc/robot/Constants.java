@@ -3,6 +3,7 @@
 // the WPILib BSD license file in the root directory of this project.
 
 package frc.robot;
+import edu.wpi.first.math.geometry.Rotation2d;
 import frc.lib.config.SwerveModuleConstants;
 
 /**
@@ -15,41 +16,41 @@ import frc.lib.config.SwerveModuleConstants;
  */
 public final class Constants {
   public static final class ConsSwerve{
-    //mod1
+    //mod0 Front Left
+    public static final class Mod0{
+      public static final int motorR_0 = 1;
+      public static final int motorT_0 = 2;
+      public static final int cancoder_0 = 0;
+      public static final Rotation2d angleOffset = Rotation2d.fromDegrees(0);
+      public static final SwerveModuleConstants constants =
+        new SwerveModuleConstants(motorR_0, motorT_0, cancoder_0, angleOffset);
+    }
+    //mod1 Front Right
     public static final class Mod1{
-      public static final int motorR_1 = 1;
-      public static final int motorT_1 = 2;
+      public static final int motorR_1 = 3;
+      public static final int motorT_1 = 4;
       public static final int cancoder_1 = 1;
       public static final Rotation2d angleOffset = Rotation2d.fromDegrees(0);
       public static final SwerveModuleConstants constants =
         new SwerveModuleConstants(motorR_1, motorT_1, cancoder_1, angleOffset);
     }
-    //mod2
+    //mod2 Rear Left
     public static final class Mod2{
-      public static final int motorR_2 = 3;
-      public static final int motorT_2 = 4;
+      public static final int motorR_2 = 5;
+      public static final int motorT_2 = 6;
       public static final int cancoder_2 = 2;
       public static final Rotation2d angleOffset = Rotation2d.fromDegrees(0);
       public static final SwerveModuleConstants constants =
         new SwerveModuleConstants(motorR_2, motorT_2, cancoder_2, angleOffset);
     }
-    //mod3
+    //mod3 Rear Right
     public static final class Mod3{
-      public static final int motorR_3 = 5;
-      public static final int motorT_3 = 6;
+      public static final int motorR_3 = 7;
+      public static final int motorT_3 = 8;
       public static final int cancoder_3 = 3;
       public static final Rotation2d angleOffset = Rotation2d.fromDegrees(0);
       public static final SwerveModuleConstants constants =
         new SwerveModuleConstants(motorR_3, motorT_3, cancoder_3, angleOffset);
-    }
-    //mod4
-    public static final class Mod4{
-      public static final int motorR_4 = 7;
-      public static final int motorT_4 = 8;
-      public static final int cancoder_4 = 4;
-      public static final Rotation2d angleOffset = Rotation2d.fromDegrees(0);
-      public static final SwerveModuleConstants constants =
-        new SwerveModuleConstants(motorR_4, motorT_4, cancoder_4, angleOffset);
     }    
   }
   public static class OperatorConstants {

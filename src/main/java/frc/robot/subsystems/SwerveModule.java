@@ -6,7 +6,10 @@ package frc.robot.subsystems;
 
 import com.ctre.phoenix6.hardware.CANcoder;
 import com.revrobotics.CANSparkMax;
+import com.revrobotics.CANSparkLowLevel.MotorType;
+
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
+import frc.lib.config.SwerveModuleConstants;
 
 public class SwerveModule extends SubsystemBase {
   private final CANSparkMax motorRotation;
@@ -28,10 +31,19 @@ public class SwerveModule extends SubsystemBase {
   public SwerveModule(int moduleNumber, SwerveModuleConstants moduleConstants) {
     this.moduleNumber = moduleNumber;
     
-    canCoder = new CANcoder(moduleConstants.cancoderID)
+    canCoder = new CANcoder(moduleConstants.cancoderID);
+    motorRotation = new CANSparkMax(moduleConstants.angleMotorID, MotorType.kBrushless);
+    motorTranslation = new CANSparkMax(moduleConstants.driveMotorID, MotorType.kBrushless);
   }
   public void setModuleSpeed(double speed, double targetAngle){
-    double tspeed = speed;
+    /**
+     * setModuleSpeed controls the module of the swerve
+     * -Speed is the speed of the traction motor
+     * -targetAngle is the angle the of the angle motor needs to be.
+     * the targetAngle need to be in radians & it is relative to the 0 of the CANCoder
+     */
+    currentAngle = getMotorAngle();
+    double tspeed = 1;
     //Calcul de la différence angulaire
     double angleDifference = targetAngle - currentAngle;
     if(angleDifference > Math.PI){
@@ -64,8 +76,14 @@ public class SwerveModule extends SubsystemBase {
     double PIDoutput = proportional + intergralTerm + derivative;
 
     motorRotation.set(PIDoutput);
-    motorTranslation.set(tspeed);
-
+    motorTranslation.set(speed*tspeed);
+  }
+  public double getMotorAngle(){
+    /**
+     * The return angle is in Radians
+     */
+    double x = canCoder.getPosition().getValue()*2*Math.PI;
+    return x;
   }
   @Override
   public void periodic() {

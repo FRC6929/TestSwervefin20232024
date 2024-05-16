@@ -7,7 +7,9 @@ package frc.robot;
 import frc.robot.Constants.OperatorConstants;
 import frc.robot.commands.Autos;
 import frc.robot.commands.ExampleCommand;
+import frc.robot.commands.SwerveCommand;
 import frc.robot.subsystems.ExampleSubsystem;
+import frc.robot.subsystems.Swerve;
 import frc.robot.subsystems.SwerveModule;
 
 import com.ctre.phoenix6.hardware.CANcoder;
@@ -29,27 +31,7 @@ public class RobotContainer {
   // The robot's subsystems and commands are defined here...
   private final ExampleSubsystem m_exampleSubsystem = new ExampleSubsystem();
   private final Joystick m_joystick = new Joystick(0);
-// Module 1
-  CANSparkMax motorRotation1 = new CANSparkMax(Constants.ConsSwerve.motorR_1, MotorType.kBrushless);
-  CANSparkMax motorTranslation1 = new CANSparkMax(Constants.ConsSwerve.motorT_1, MotorType.kBrushless);
-  CANcoder canCoder1 = new CANcoder(Constants.ConsSwerve.cancoder_1);
-  private final SwerveModule module1 = new SwerveModule(motorRotation1, motorTranslation1,canCoder1);
-// Module 2
-  CANSparkMax motorRotation2 = new CANSparkMax(Constants.ConsSwerve.motorR_2, MotorType.kBrushless);
-  CANSparkMax motorTranslation2 = new CANSparkMax(Constants.ConsSwerve.motorT_2, MotorType.kBrushless);
-  CANcoder canCoder2 = new CANcoder(Constants.ConsSwerve.cancoder_2);
-  private final SwerveModule module2 = new SwerveModule(motorRotation2, motorTranslation2,canCoder2);
-// Module 3
-  CANSparkMax motorRotation3 = new CANSparkMax(Constants.ConsSwerve.motorR_3, MotorType.kBrushless);
-  CANSparkMax motorTranslation3 = new CANSparkMax(Constants.ConsSwerve.motorT_3, MotorType.kBrushless);
-  CANcoder canCoder3 = new CANcoder(Constants.ConsSwerve.cancoder_3);
-  private final SwerveModule module3 = new SwerveModule(motorRotation3, motorTranslation3,canCoder3);  
-// Module 4
-  CANSparkMax motorRotation4 = new CANSparkMax(Constants.ConsSwerve.motorR_4, MotorType.kBrushless);
-  CANSparkMax motorTranslation4 = new CANSparkMax(Constants.ConsSwerve.motorT_4, MotorType.kBrushless);
-  CANcoder canCoder4 = new CANcoder(Constants.ConsSwerve.cancoder_4);
-  private final SwerveModule module4 = new SwerveModule(motorRotation4, motorTranslation4,canCoder4);
-
+  private final Swerve m_swerve = new Swerve();
 
   // Replace with CommandPS4Controller or CommandJoystick if needed
   private final CommandXboxController m_driverController =
@@ -57,7 +39,7 @@ public class RobotContainer {
 
   /** The container for the robot. Contains subsystems, OI devices, and commands. */
   public RobotContainer() {
-    
+    m_swerve.setDefaultCommand(new SwerveCommand(m_swerve, m_joystick));
     // Configure the trigger bindings
     configureBindings();
   }

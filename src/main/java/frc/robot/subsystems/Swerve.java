@@ -5,6 +5,7 @@
 package frc.robot.subsystems;
 
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
+import frc.robot.Constants;
 
 public class Swerve extends SubsystemBase {
   private SwerveModule[] mSwervemods;
@@ -13,17 +14,17 @@ public class Swerve extends SubsystemBase {
   public Swerve() {
     mSwervemods =
       new SwerveModule[]{
-        new SwerveModule(null, null, null),
-        new SwerveModule(null, null, null),
-        new SwerveModule(null, null, null),
-        new SwerveModule(null, null, null)
+        new SwerveModule(0, Constants.ConsSwerve.Mod0.constants),
+        new SwerveModule(1, Constants.ConsSwerve.Mod1.constants),
+        new SwerveModule(2, Constants.ConsSwerve.Mod2.constants),
+        new SwerveModule(3, Constants.ConsSwerve.Mod3.constants)
       };
-
-
-
-
   }
-
+  public void drive(double angle, double magnitude){
+    for(int i= 0; i<4; i++){
+      mSwervemods[i].setModuleSpeed(magnitude, angle);
+    }
+  }
   @Override
   public void periodic() {
     // This method will be called once per scheduler run
