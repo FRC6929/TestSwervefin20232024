@@ -23,7 +23,7 @@ public final class Constants {
       public static final int cancoder_0 = 0;
       public static final Rotation2d angleOffset = Rotation2d.fromDegrees(0);
       public static final SwerveModuleConstants constants =
-        new SwerveModuleConstants(motorR_0, motorT_0, cancoder_0, angleOffset);
+        new SwerveModuleConstants(motorT_0, motorR_0, cancoder_0, angleOffset);
     }
     //mod1 Front Right
     public static final class Mod1{
@@ -32,7 +32,7 @@ public final class Constants {
       public static final int cancoder_1 = 1;
       public static final Rotation2d angleOffset = Rotation2d.fromDegrees(0);
       public static final SwerveModuleConstants constants =
-        new SwerveModuleConstants(motorR_1, motorT_1, cancoder_1, angleOffset);
+        new SwerveModuleConstants(motorT_1, motorR_1, cancoder_1, angleOffset);
     }
     //mod2 Rear Left
     public static final class Mod2{
@@ -41,7 +41,7 @@ public final class Constants {
       public static final int cancoder_2 = 2;
       public static final Rotation2d angleOffset = Rotation2d.fromDegrees(0);
       public static final SwerveModuleConstants constants =
-        new SwerveModuleConstants(motorR_2, motorT_2, cancoder_2, angleOffset);
+        new SwerveModuleConstants(motorT_2, motorR_2, cancoder_2, angleOffset);
     }
     //mod3 Rear Right
     public static final class Mod3{
@@ -50,7 +50,7 @@ public final class Constants {
       public static final int cancoder_3 = 3;
       public static final Rotation2d angleOffset = Rotation2d.fromDegrees(0);
       public static final SwerveModuleConstants constants =
-        new SwerveModuleConstants(motorR_3, motorT_3, cancoder_3, angleOffset);
+        new SwerveModuleConstants(motorT_3, motorR_3, cancoder_3, angleOffset);
     }    
   }
   public static class OperatorConstants {

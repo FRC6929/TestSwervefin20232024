@@ -4,6 +4,7 @@
 
 package frc.robot.subsystems;
 
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
 
@@ -23,6 +24,8 @@ public class Swerve extends SubsystemBase {
   public void drive(double angle, double magnitude){
     for(int i= 0; i<4; i++){
       mSwervemods[i].setModuleSpeed(magnitude, angle);
+      SmartDashboard.putNumber("angle", angle);
+      SmartDashboard.putNumber("magnitude", magnitude);
     }
   }
   @Override

@@ -8,6 +8,7 @@ import com.ctre.phoenix6.hardware.CANcoder;
 import com.revrobotics.CANSparkMax;
 import com.revrobotics.CANSparkLowLevel.MotorType;
 
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.lib.config.SwerveModuleConstants;
 
@@ -19,7 +20,7 @@ public class SwerveModule extends SubsystemBase {
   public int moduleNumber;
 
   //constante de PID
-  double kP = 0;
+  double kP = 0.005;
   double kI = 0;
   double kD = 0;
 
@@ -43,6 +44,7 @@ public class SwerveModule extends SubsystemBase {
      * the targetAngle need to be in radians & it is relative to the 0 of the CANCoder
      */
     currentAngle = getMotorAngle();
+    SmartDashboard.putNumber("angle current" + moduleNumber, currentAngle);
     double tspeed = 1;
     //Calcul de la différence angulaire
     double angleDifference = targetAngle - currentAngle;
@@ -75,6 +77,9 @@ public class SwerveModule extends SubsystemBase {
     //somme des PID
     double PIDoutput = proportional + intergralTerm + derivative;
 
+    SmartDashboard.putNumber("PIDoutput" + moduleNumber, PIDoutput);
+    SmartDashboard.putNumber("speed"+ moduleNumber, speed*tspeed);
+
     motorRotation.set(PIDoutput);
     motorTranslation.set(speed*tspeed);
   }
@@ -82,7 +87,7 @@ public class SwerveModule extends SubsystemBase {
     /**
      * The return angle is in Radians
      */
-    double x = canCoder.getPosition().getValue()*2*Math.PI;
+    double x = Math.toRadians(canCoder.getPosition().getValue());
     return x;
   }
   @Override
