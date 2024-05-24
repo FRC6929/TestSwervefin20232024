@@ -89,7 +89,7 @@ public class SwerveModule extends SubsystemBase {
     /**
      * The return angle is in Radians
      */
-    double x = Math.toRadians(canCoder.getPosition().getValue());
+    double x = canCoder.getAbsolutePosition().getValueAsDouble()*2*Math.PI;
     return x;
   }
   @Override
