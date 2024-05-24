@@ -28,7 +28,7 @@ public class SwerveCommand extends Command {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    double angle = Math.atan2(m_joystick.getY(),m_joystick.getX());
+    double angle = -Math.atan2(m_joystick.getY(),m_joystick.getX());
     double magnitude = m_joystick.getMagnitude();
 
     swerve.drive(angle, magnitude);

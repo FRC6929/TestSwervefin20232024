@@ -20,8 +20,8 @@ public class SwerveModule extends SubsystemBase {
   public int moduleNumber;
 
   //constante de PID
-  double kP = 0.005;
-  double kI = 0;
+  double kP = 0.05;
+  double kI = 0.000;
   double kD = 0;
 
   //Variable PID
@@ -35,6 +35,8 @@ public class SwerveModule extends SubsystemBase {
     canCoder = new CANcoder(moduleConstants.cancoderID);
     motorRotation = new CANSparkMax(moduleConstants.angleMotorID, MotorType.kBrushless);
     motorTranslation = new CANSparkMax(moduleConstants.driveMotorID, MotorType.kBrushless);
+    motorRotation.setInverted(false);
+    motorTranslation.setInverted(false);
   }
   public void setModuleSpeed(double speed, double targetAngle){
     /**
@@ -43,11 +45,11 @@ public class SwerveModule extends SubsystemBase {
      * -targetAngle is the angle the of the angle motor needs to be.
      * the targetAngle need to be in radians & it is relative to the 0 of the CANCoder
      */
-    currentAngle = getMotorAngle();
     SmartDashboard.putNumber("angle current" + moduleNumber, currentAngle);
     double tspeed = 1;
     //Calcul de la différence angulaire
     double angleDifference = targetAngle - currentAngle;
+    SmartDashboard.putNumber("angleDifference", angleDifference);
     if(angleDifference > Math.PI){
       angleDifference -= 2*Math.PI;
     }else if(angleDifference < -Math.PI){
@@ -93,5 +95,6 @@ public class SwerveModule extends SubsystemBase {
   @Override
   public void periodic() {
     // This method will be called once per scheduler run
+    currentAngle = getMotorAngle();
   }
 }
