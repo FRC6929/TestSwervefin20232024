@@ -7,7 +7,6 @@ package frc.robot.commands;
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj2.command.Command;
 import frc.robot.subsystems.Swerve;
-import frc.robot.subsystems.SwerveModule;
 
 public class SwerveCommand extends Command {
   private final Swerve swerve;
@@ -30,7 +29,9 @@ public class SwerveCommand extends Command {
   public void execute() {
     double angle = -Math.atan2(m_joystick.getY(),m_joystick.getX());
     double magnitude = m_joystick.getMagnitude();
-
+    if(magnitude< 0.01){
+      magnitude = 0;
+    }
     swerve.drive(angle, magnitude);
   }
 

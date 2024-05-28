@@ -15,6 +15,8 @@ import frc.lib.config.SwerveModuleConstants;
  * constants are needed, to reduce verbosity.
  */
 public final class Constants {
+    public static final double wheeltrack = 50; //cm
+    public static final double wheelbase = 50; //cm
   public static final class ConsSwerve{
     //mod0 Front Left
     public static final class Mod0{

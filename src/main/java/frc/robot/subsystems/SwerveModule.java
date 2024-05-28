@@ -20,7 +20,7 @@ public class SwerveModule extends SubsystemBase {
   public int moduleNumber;
 
   //constante de PID
-  double kP = 0.05;
+  double kP = 0.1;
   double kI = 0.000;
   double kD = 0;
 
@@ -49,7 +49,6 @@ public class SwerveModule extends SubsystemBase {
     double tspeed = 1;
     //Calcul de la différence angulaire
     double angleDifference = targetAngle - currentAngle;
-    SmartDashboard.putNumber("angleDifference", angleDifference);
     if(angleDifference > Math.PI){
       angleDifference -= 2*Math.PI;
     }else if(angleDifference < -Math.PI){
@@ -58,7 +57,7 @@ public class SwerveModule extends SubsystemBase {
     double angleForMotor = angleDifference;
     //Si le sens de rotation le plus court est inversé, inverse le moteur de traction et le moteur de rotation
     if(Math.abs(angleDifference)> Math.PI/2){
-      angleForMotor = 2*Math.PI - angleDifference;
+      angleForMotor = Math.PI + angleDifference;
       if(angleForMotor > Math.PI){
         angleForMotor -= 2*Math.PI;
       }else if(angleForMotor < -Math.PI){
@@ -66,8 +65,10 @@ public class SwerveModule extends SubsystemBase {
       }
       tspeed *= -1;
     }
+    
+    SmartDashboard.putNumber("angleForMotor" + moduleNumber, angleForMotor);
     //calcul de l'erreur
-    double error = angleForMotor;
+    double error = -angleForMotor;
     //calcul de la partie proportionnelle
     double proportional = kP * error;
     //calcul de la partie intégrale
@@ -81,8 +82,11 @@ public class SwerveModule extends SubsystemBase {
 
     SmartDashboard.putNumber("PIDoutput" + moduleNumber, PIDoutput);
     SmartDashboard.putNumber("speed"+ moduleNumber, speed*tspeed);
-
+    if(speed*tspeed == 0){
+      motorRotation.set(0);
+    }else{
     motorRotation.set(PIDoutput);
+    }
     motorTranslation.set(speed*tspeed);
   }
   public double getMotorAngle(){
