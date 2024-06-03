@@ -17,6 +17,20 @@ import frc.lib.config.SwerveModuleConstants;
 public final class Constants {
     public static final double wheeltrack = 50; //cm
     public static final double wheelbase = 50; //cm
+    public static final double wheelradius = 5;//cm
+    public static final double[][] MatrixA ={
+      {1, 0, wheelbase/2},//v FLx
+      {0, 1, wheeltrack/2},//v FLy
+      {1, 0, -wheelbase/2},//v FRx
+      {0, 1, wheeltrack/2},//v FRy
+      {1, 0, wheelbase/2},//v RLx
+      {0, 1, -wheeltrack/2},//v RLy
+      {1, 0, -wheelbase/2},//v RRx
+      {0, 1, -wheeltrack/2}//v RRy
+    };
+
+
+
   public static final class ConsSwerve{
     //mod0 Front Left
     public static final class Mod0{

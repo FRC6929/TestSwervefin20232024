@@ -21,11 +21,11 @@ public class Swerve extends SubsystemBase {
         new SwerveModule(3, Constants.ConsSwerve.Mod3.constants)
       };
   }
-  public void drive(double angle, double magnitude){
+  public void drive(double[] angles, double[] magnitudes){
     for(int i= 0; i<4; i++){
-      mSwervemods[i].setModuleSpeed(magnitude, angle);
-      SmartDashboard.putNumber("angle", angle);
-      SmartDashboard.putNumber("magnitude", magnitude);
+      mSwervemods[i].setModuleSpeed(magnitudes[i], angles[i]);
+      SmartDashboard.putNumber("angle "+ i, angles[i]);
+      SmartDashboard.putNumber("magnitude " + i, magnitudes[i]);
     }
   }
   @Override
