@@ -5,6 +5,7 @@
 package frc.robot.commands;
 
 import edu.wpi.first.wpilibj.Joystick;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
 import frc.robot.Constants;
 import frc.robot.subsystems.Swerve;
@@ -12,10 +13,10 @@ import frc.robot.subsystems.Swerve;
 public class SwerveCommand extends Command {
   private final Swerve swerve;
   private final Joystick m_joystick;
-  double[] angles;
-  double[] magnitudes;
-  double[] inputs;//0 = x, 1 = y, 2 = z
-  double[] outputs; // composants of vectors
+  double[] angles= {0,0,0,0};
+  double[] magnitudes = {0,0,0,0};
+  double[] inputs = {0,0,0};//0 = x, 1 = y, 2 = z
+  double[] outputs = {0,0,0,0,0,0,0,0}; // composants of vectors
   /** Creates a new SwerveCommand. */
   public SwerveCommand(Swerve swerve, Joystick joystick) {
     this.swerve = swerve;
@@ -31,14 +32,15 @@ public class SwerveCommand extends Command {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    inputs[0] = m_joystick.getX(); 
-    inputs[1] = -m_joystick.getY();
-    inputs[2] = m_joystick.getZ();
+    inputs[0] = 25*m_joystick.getRawAxis(0); 
+    inputs[1] = -25*m_joystick.getRawAxis(1);
+    inputs[2] = -m_joystick.getRawAxis(4);
     for(int i = 0; i<8; i++){
       double now = 0;
       for(int j = 0; j<3; j++){
         now += inputs[j]*Constants.MatrixA[i][j];
       }
+      SmartDashboard.putNumber("output" + i, now);
       outputs[i] = now;
     }
     for(int i =0; i<4; i++){
