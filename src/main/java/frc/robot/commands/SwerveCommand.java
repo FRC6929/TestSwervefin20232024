@@ -32,9 +32,21 @@ public class SwerveCommand extends Command {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
+  if(Math.abs(m_joystick.getRawAxis(0)) > 0.05){//deadzone
     inputs[0] = 25*m_joystick.getRawAxis(0); 
+  }else{
+    inputs[0]= 0;
+  }
+  if(Math.abs(m_joystick.getRawAxis(1)) > 0.05){//deadzone
     inputs[1] = -25*m_joystick.getRawAxis(1);
+  }else{
+    inputs[1] = 0;
+  }
+  if(Math.abs(m_joystick.getRawAxis(4)) > 0.05){//deadzone
     inputs[2] = -m_joystick.getRawAxis(4);
+  }else{
+    inputs[2] = 0;
+  }
     for(int i = 0; i<8; i++){
       double now = 0;
       for(int j = 0; j<3; j++){
