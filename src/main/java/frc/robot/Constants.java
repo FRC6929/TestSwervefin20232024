@@ -19,13 +19,13 @@ public final class Constants {
     public static final double wheelbase = 50; //cm
     public static final double wheelradius = Math.sqrt(Math.pow(wheelbase, 2)+ Math.pow(wheeltrack, 2));//cm
     public static final double[][] MatrixA ={
-      {1, 0,- wheelbase/2},//v FLx
+      {1, 0, wheelbase/2},//v FLx
       {0, 1, wheeltrack/2},//v FLy
       {1, 0, wheelbase/2},//v FRx
-      {0, 1, wheeltrack/2},//v FRy
+      {0, 1, -wheeltrack/2},//v FRy
       {1, 0, -wheelbase/2},//v RLx
-      {0, 1, -wheeltrack/2},//v RLy
-      {1, 0, wheelbase/2},//v RRx
+      {0, 1, wheeltrack/2},//v RLy
+      {1, 0, -wheelbase/2},//v RRx
       {0, 1, -wheeltrack/2}//v RRy
     };
 
