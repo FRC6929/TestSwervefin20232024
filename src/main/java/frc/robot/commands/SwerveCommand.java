@@ -32,33 +32,36 @@ public class SwerveCommand extends Command {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-  if(Math.abs(m_joystick.getRawAxis(0)) > 0.05){//deadzone
-    inputs[0] = 25*m_joystick.getRawAxis(0); 
-  }else{
-    inputs[0]= 0;
-  }
-  if(Math.abs(m_joystick.getRawAxis(1)) > 0.05){//deadzone
-    inputs[1] = -25*m_joystick.getRawAxis(1);
-  }else{
-    inputs[1] = 0;
-  }
-  if(Math.abs(m_joystick.getRawAxis(4)) > 0.05){//deadzone
-    inputs[2] = -m_joystick.getRawAxis(4);
-  }else{
-    inputs[2] = 0;
-  }
+    if(Math.abs(m_joystick.getRawAxis(0)) > 0.05){//deadzone
+      inputs[0] = 25*m_joystick.getRawAxis(0); 
+    }else{
+      inputs[0]= 0;
+    }
+    if(Math.abs(m_joystick.getRawAxis(1)) > 0.05){//deadzone
+      inputs[1] = -25*m_joystick.getRawAxis(1);
+    }else{
+      inputs[1] = 0;
+    }
+    if(Math.abs(m_joystick.getRawAxis(4)) > 0.05){//deadzone
+      inputs[2] = -m_joystick.getRawAxis(4);
+    }else{
+      inputs[2] = 0;
+    }
+    /*boucle qui multiplie la Matrice A et la Matrice des inputs(X)*/
     for(int i = 0; i<8; i++){
-      double now = 0;
-      for(int j = 0; j<3; j++){
-        now += inputs[j]*Constants.MatrixA[i][j];
-      }
+      double now = 0;//variable qui additionne les 3 lignes de la matrice A 
+        for(int j = 0; j<3; j++){
+          now += inputs[j]*Constants.MatrixA[i][j];
+        }
       SmartDashboard.putNumber("output" + i, now);
       outputs[i] = now;
     }
+    /* transforme les vecteurs composantes de la matrice output(B) en angles et normes d'un seul vecteur par module */
     for(int i =0; i<4; i++){
       angles[i]= Math.atan2(outputs[2*i + 1],outputs[2*i]);
       magnitudes[i]= Math.sqrt(Math.pow(outputs[2*i + 1],2) + Math.pow(outputs[2*i],2))/Constants.wheelradius;
     }
+    
     swerve.drive(angles, magnitudes);
   }
 

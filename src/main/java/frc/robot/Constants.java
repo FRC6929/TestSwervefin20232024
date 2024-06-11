@@ -14,10 +14,18 @@ import frc.lib.config.SwerveModuleConstants;
  * <p>It is advised to statically import this class (or one of its inner classes) wherever the
  * constants are needed, to reduce verbosity.
  */
+
+ //pour comprendre la matrice A suivez ce lien https://www.freshconsulting.com/insights/blog/how-to-build-a-swerve-drive-robot/
 public final class Constants {
+    /* 
+     * track est la distance en x entre les deux roues
+     * base est la distance en y entre les deux roues
+     * radius est l'hypoténuse de track et base
+     */
     public static final double wheeltrack = 50; //cm
     public static final double wheelbase = 50; //cm
     public static final double wheelradius = Math.sqrt(Math.pow(wheelbase, 2)+ Math.pow(wheeltrack, 2));//cm
+    //Matrice de constante qui permettent de calculer les vecteurs des modules swerve
     public static final double[][] MatrixA ={
       {1, 0, wheelbase/2},//v FLx
       {0, 1, wheeltrack/2},//v FLy
@@ -28,9 +36,6 @@ public final class Constants {
       {1, 0, -wheelbase/2},//v RRx
       {0, 1, -wheeltrack/2}//v RRy
     };
-
-
-
   public static final class ConsSwerve{
     //mod0 Front Left
     public static final class Mod0{
@@ -38,6 +43,7 @@ public final class Constants {
       public static final int motorT_0 = 2;
       public static final int cancoder_0 = 0;
       public static final Rotation2d angleOffset = Rotation2d.fromDegrees(0);
+      /*transforme les constantes dans un seul endroit*/
       public static final SwerveModuleConstants constants =
         new SwerveModuleConstants(motorT_0, motorR_0, cancoder_0, angleOffset);
     }
@@ -47,6 +53,7 @@ public final class Constants {
       public static final int motorT_1 = 4;
       public static final int cancoder_1 = 1;
       public static final Rotation2d angleOffset = Rotation2d.fromDegrees(0);
+      /*transforme les constantes dans un seul endroit*/
       public static final SwerveModuleConstants constants =
         new SwerveModuleConstants(motorT_1, motorR_1, cancoder_1, angleOffset);
     }
@@ -55,7 +62,8 @@ public final class Constants {
       public static final int motorR_2 = 5;
       public static final int motorT_2 = 6;
       public static final int cancoder_2 = 2;
-      public static final Rotation2d angleOffset = Rotation2d.fromDegrees(0);
+      public static final Rotation2d angleOffset = Rotation2d.fromDegrees(0);  
+      /*transforme les constantes dans un seul endroit*/
       public static final SwerveModuleConstants constants =
         new SwerveModuleConstants(motorT_2, motorR_2, cancoder_2, angleOffset);
     }
@@ -65,11 +73,10 @@ public final class Constants {
       public static final int motorT_3 = 8;
       public static final int cancoder_3 = 3;
       public static final Rotation2d angleOffset = Rotation2d.fromDegrees(0);
+      /*transforme les constantes dans un seul endroit*/
       public static final SwerveModuleConstants constants =
         new SwerveModuleConstants(motorT_3, motorR_3, cancoder_3, angleOffset);
     }    
   }
-  public static class OperatorConstants {
-    public static final int kDriverControllerPort = 0;
-  }
+  
 }

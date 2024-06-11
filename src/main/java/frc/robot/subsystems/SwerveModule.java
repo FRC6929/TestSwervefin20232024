@@ -20,8 +20,14 @@ public class SwerveModule extends SubsystemBase {
   public int moduleNumber;
 
   //constante de PID
+   /*plus la différence angulaire est grande plus il va a sa position rapidement */
+   //permet de bouger de facon normale
   double kP = 0.1;
+  /*la partie intégrale augmente lorsque l'erreur est répété*/
+  //utile dans les cas qu'il manque un petit quelque chose pour atteindre la cible
   double kI = 0.000;
+  /*différence entre l'erreur actuelle et l'erreur d'avant*/
+  //utile quand il y a des grands changement dans les positions
   double kD = 0;
 
   //Variable PID
@@ -29,12 +35,14 @@ public class SwerveModule extends SubsystemBase {
   private double integral = 0;
 
   /** Creates a new SwerveModule. */
+  /*ceci est comme une boucle qui crée les modules avec leurs moteurs respectif */
   public SwerveModule(int moduleNumber, SwerveModuleConstants moduleConstants) {
-    this.moduleNumber = moduleNumber;
-    
+    this.moduleNumber = moduleNumber; 
     canCoder = new CANcoder(moduleConstants.cancoderID);
     motorRotation = new CANSparkMax(moduleConstants.angleMotorID, MotorType.kBrushless);
     motorTranslation = new CANSparkMax(moduleConstants.driveMotorID, MotorType.kBrushless);
+    //il est important de set le sens des moteurs
+    //parce que s'il était inversé auparavant il vont toujours l'etre si on les set pas
     motorRotation.setInverted(false);
     motorTranslation.setInverted(false);
   }
@@ -42,28 +50,36 @@ public class SwerveModule extends SubsystemBase {
     /**
      * setModuleSpeed controls the module of the swerve
      * -Speed is the speed of the traction motor
-     * -targetAngle is the angle the of the angle motor needs to be.
-     * the targetAngle need to be in radians & it is relative to the 0 of the CANCoder
+     * -targetAngle is the angle the motor needs to be.
+     * the targetAngle needs to be in radians & it is relative to the 0 of the CANCoder
      */
     SmartDashboard.putNumber("angle current" + moduleNumber, currentAngle);
     double tspeed = 1;
     //Calcul de la différence angulaire
     double angleDifference = targetAngle - currentAngle;
+    /*change la différence angulaire pour qu'elle soit entre [-PI, PI] */
     if(angleDifference > Math.PI){
       angleDifference -= 2*Math.PI;
     }else if(angleDifference < -Math.PI){
       angleDifference += 2*Math.PI;
     }
+
     double angleForMotor = angleDifference;
-    //Si le sens de rotation le plus court est inversé, inverse le moteur de traction et le moteur de rotation
+    /*
+     * Si le moteur de rotation doit faire plus de Pi/2 
+     * -> Moteur de traction *-1
+     * -> Moteur de Rotation => on change le sens sans changer la direction (+ PI)
+     * En gros c'est comme changer le sens d'un vecteur (Math 5SN)
+     */
     if(Math.abs(angleDifference)> Math.PI/2){
       angleForMotor = Math.PI + angleDifference;
+      tspeed *= -1;
+      /*change la différence angulaire pour qu'elle soit entre [-PI, PI] */
       if(angleForMotor > Math.PI){
         angleForMotor -= 2*Math.PI;
       }else if(angleForMotor < -Math.PI){
         angleForMotor += 2*Math.PI;
       }
-      tspeed *= -1;
     }
     
     SmartDashboard.putNumber("angleForMotor" + moduleNumber, angleForMotor);

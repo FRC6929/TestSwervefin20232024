@@ -10,9 +10,9 @@ import frc.robot.Constants;
 
 public class Swerve extends SubsystemBase {
   private SwerveModule[] mSwervemods;
-
   /** Creates a new Swerve. */
   public Swerve() {
+    /*mSwervemods est un subsystem qui continent les 4 module swerve*/
     mSwervemods =
       new SwerveModule[]{
         new SwerveModule(0, Constants.ConsSwerve.Mod0.constants),
@@ -22,6 +22,7 @@ public class Swerve extends SubsystemBase {
       };
   }
   public void drive(double[] angles, double[] magnitudes){
+    /*distribue les vecteurs a leur module respectif*/
     for(int i= 0; i<4; i++){
       mSwervemods[i].setModuleSpeed(magnitudes[i], angles[i]);
       SmartDashboard.putNumber("angle "+ i, angles[i]);
